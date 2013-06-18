@@ -4,21 +4,21 @@ namespace Dyndns;
 
 /**
  * Helper functions.
- * 
+ *
  * @package Dyndns
  * @author  Nico Kaiser <nico@kaiser.me>
  */
 class Helper
-{    
+{
     /**
      * Check valid IP address
      *
      * @param string IP address
      * @return boolean True if IP is valid
-     */ 
+     */
     public static function checkValidIp($ip)
     {
-        if (! eregi("^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$", $ip)) 
+        if (! eregi("^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$", $ip))
             return false;
 
         $tmp = explode(".", $ip);
@@ -29,13 +29,13 @@ class Helper
 
         return true;
     }
-    
+
     /**
      * Check valid hostname (FQDN)
      *
      * @param string Hostname
      * @return boolean
-     */ 
+     */
     public static function checkValidHost($hostname)
     {
         return eregi('^[a-z0-9.-]+$', $hostname);
@@ -44,7 +44,7 @@ class Helper
     /**
      * Tries to get the IPv4 of the client
      *
-     * @return string ip 
+     * @return string ip
      */
     public static function getMyIp()
     {
@@ -63,7 +63,7 @@ class Helper
     public static function compareHosts($host1, $host2, $wildcard = false)
     {
         $a = explode('.', $host1);
-        $b = explode('.', $host2);        
+        $b = explode('.', $host2);
 
         if (count($a) != count($b))
             return false;

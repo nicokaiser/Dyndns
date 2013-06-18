@@ -4,12 +4,12 @@ namespace Dyndns;
 
 /**
  * Simple Dynamic DNS server.
- * 
+ *
  * @package Dyndns
  * @author  Nico Kaiser <nico@kaiser.me>
  */
 class Server
-{    
+{
     /**
      * Storage for all configuration variables, set in config.php
      * @var array
@@ -37,17 +37,17 @@ class Server
     /**
      * Debug buffer
      * @var string
-     */ 
+     */
     private $debugBuffer;
 
     public function __construct()
     {
         $this->config = array (
-            'hostsFile' => 'dyndns.hosts',	// Location of the hosts database
+            'hostsFile' => 'dyndns.hosts',  // Location of the hosts database
             'userFile' => 'dyndns.user',    // Location of the user database
-            'debugFile' => 'dyndns.log',   	// Debug file
+            'debugFile' => 'dyndns.log',    // Debug file
             'debug' => false,               // Enable debugging
-            
+
             'bind.server' => false,
             'bind.zone' => '',
             'bind.ttl' => 300,
@@ -59,10 +59,10 @@ class Server
     {
         $this->users = new Users($this->config['userFile']);
         $this->hosts = new Hosts($this->config['hostsFile']);
-        
+
         $this->checkHttpMethod();
         $this->checkAuthentication();
-        
+
         // Get IP address, fallback to REMOTE_ADDR
         $this->myIp = Helper::getMyIp();
         if (array_key_exists('myip', $_REQUEST)) {
@@ -72,7 +72,7 @@ class Server
                 $this->debug('Invalid parameter myip. Using default REMOTE_ADDR');
             }
         }
-        
+
         // Get hostnames to be updated
         $this->hostnames = array ();
         if (array_key_exists('hostname', $_REQUEST) && ($_REQUEST['hostname'] != '')) {
@@ -81,18 +81,18 @@ class Server
         } else {
             $this->returnCode('notfqdn');
         }
-        
+
         $this->updateHosts();
-                
+
         // Return "good" code as everything seems to be ok now
         $this->returnCode('good');
     }
-    
+
     public function setConfig($key, $value)
     {
         $this->config[$key] = $value;
     }
-    
+
     public function getConfig($key)
     {
         return $this->config[$key];
@@ -130,7 +130,7 @@ class Server
     private function checkHostnames()
     {
         foreach ($this->hostnames as $hostname) {
-        	// check if the hostname is valid FQDN
+            // check if the hostname is valid FQDN
             if (! Helper::checkValidHost($hostname)) {
                 $this->returnCode('notfqdn');
             }
@@ -149,7 +149,7 @@ class Server
                 $this->returnCode('dnserr');
             }
         }
-        
+
         // Flush host database (write to hosts file)
         if (! $this->hosts->flush()) {
             $this->returnCode('dnserr');

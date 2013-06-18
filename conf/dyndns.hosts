@@ -1,5 +1,5 @@
-client1.dyndns.example.com:user1,user2
-client2.dyndns.example.com:user1,user2
-user1.dyndns.example.com:user1
-user2.dyndns.example.com:user2
-*.u1.dyndns.example.com:user1
+client1.dyn.example.com:user1,user2
+client2.dyn.example.com:user1,user2
+user1.dyn.example.com:user1
+user2.dyn.example.com:user2
+*.u1.dyn.example.com:user1

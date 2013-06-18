@@ -9,9 +9,10 @@ As it uses the same syntax as the original DynDNS.org servers do, a dynamic DNS 
 Installation
 ------------
 
-To mimic the original DynDNS.org behavior, the Script's URL must be
+This script acts like the original DynDNS.org server and handles DNS updates on the url
 
-    http://members.dyndns.org/nic/update
+    http://yourdomain.tld/?hostname=<domain>&myip=<ipaddr>
+
 
 You may have to adjust your own DNS configuration to make "members.dyndns.org" point to your own 
 Server and you Web Servers configuration to make "/nic/update" call the PHP script provided in this 
@@ -98,13 +99,13 @@ Usage
 
 Authentication in URL:
 
-http://username:password@members.dyndns.org/nic/update?hostname=yourhostname&myip=ipaddress&wildcard=NOCHG&mx=NOCHG&backmx=NOCHG
+http://username:password@yourdomain.tld/?hostname=yourhostname&myip=ipaddress
 
 
 Raw HTTP GET Request:
 
-GET /nic/update?hostname=yourhostname&myip=ipaddress&wildcard=NOCHG&mx=NOCHG&backmx=NOCHG HTTP/1.0 
-Host: members.dyndns.org 
+GET /?hostname=yourhostname&myip=ipaddress HTTP/1.0 
+Host: yourdomain.tld 
 Authorization: Basic base-64-authorization 
 User-Agent: Company - Device - Version Number
 
@@ -117,13 +118,11 @@ Implemented fields
 hostname
   Comma separated list of hostnames that you wish to update (up to 20 hostnames per request). 
   This is a required field.
-  Example: hostname=test.dyndns.org,customtest.dyndns.org
+  Example: hostname=dynhost1.yourdomain.tld,dynhost2.yourdomain.tld
 
 myip
   IP address to set for the update.
   (If this parameter is not specified, the best IP address the server can determine will be used)
-
-(See http://www.dyndns.com/developers/specs/syntax.html for more details)
 
 
 Return Codes
@@ -153,12 +152,3 @@ dnserr
   There is a problem or scheduled maintenance on our side.
 
 (See http://www.dyndns.com/developers/specs/return.html for more details)
-
-
-Todo
-----
-
-* Implement Wildcards
-* Implement NOCHG
-* Implement more features from DynDNS.org
-* Provide Apache templates (for mod_rewrite, etc.)
