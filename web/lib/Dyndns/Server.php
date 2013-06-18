@@ -179,7 +179,7 @@ class Server
         exit;
     }
 
-    private function debug($message)
+    public function debug($message)
     {
         $this->debugBuffer .= @date('M j G:i:s') . ' Dyndns: ' . $message . "\n";
     }

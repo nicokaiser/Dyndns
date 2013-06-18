@@ -17,7 +17,7 @@ class Users
         $this->userFile = $userFile;
     }
 
-    private function checkCredentials($user, $password)
+    public function checkCredentials($user, $password)
     {
         $lines = @file($this->userFile);
 
