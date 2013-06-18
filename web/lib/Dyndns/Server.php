@@ -181,6 +181,6 @@ class Server
 
     public function debug($message)
     {
-        $this->debugBuffer .= @date('M j G:i:s') . ' Dyndns: ' . $message . "\n";
+        $this->debugBuffer .= @date('M j H:i:s') . ' Dyndns: ' . $message . "\n";
     }
 }

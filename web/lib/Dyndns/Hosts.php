@@ -60,6 +60,7 @@ class Hosts
         
         $this->debug('Update: ' . $hostname . ':' . $ip);
         $this->updates[$hostname] = $ip;
+        return true;
     }
 
     /**
