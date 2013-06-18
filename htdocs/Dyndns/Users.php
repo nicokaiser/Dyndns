@@ -1,12 +1,14 @@
 <?php
 
+namespace Dyndns;
+
 /**
  * User database.
  * 
  * @package Dyndns
  * @author  Nico Kaiser <nico@kaiser.me>
  */
-class DyndnsUsers
+class Users
 {
     private $userFile;
 

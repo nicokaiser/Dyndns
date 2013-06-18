@@ -1,12 +1,14 @@
 <?php
 
+namespace Dyndns;
+
 /**
  * Helper functions.
  * 
  * @package Dyndns
  * @author  Nico Kaiser <nico@kaiser.me>
  */
-class DyndnsHelper
+class Helper
 {    
     /**
      * Check valid IP address

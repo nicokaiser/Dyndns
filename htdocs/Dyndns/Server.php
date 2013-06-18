@@ -1,8 +1,6 @@
 <?php
- 
-require_once(dirname(__FILE__) . '/DyndnsHelper.class.php');
-require_once(dirname(__FILE__) . '/DyndnsHosts.class.php');
-require_once(dirname(__FILE__) . '/DyndnsUsers.class.php');
+
+namespace Dyndns;
 
 /**
  * Simple Dynamic DNS server.
@@ -10,7 +8,7 @@ require_once(dirname(__FILE__) . '/DyndnsUsers.class.php');
  * @package Dyndns
  * @author  Nico Kaiser <nico@kaiser.me>
  */
-class Dyndns
+class Server
 {    
     /**
      * Storage for all configuration variables, set in config.php
@@ -59,16 +57,16 @@ class Dyndns
 
     public function init()
     {
-        $this->users = new DyndnsUsers($this->config['userFile']);
-        $this->hosts = new DyndnsHosts($this->config['hostsFile']);
+        $this->users = new Users($this->config['userFile']);
+        $this->hosts = new Hosts($this->config['hostsFile']);
         
         $this->checkHttpMethod();
         $this->checkAuthentication();
         
         // Get IP address, fallback to REMOTE_ADDR
-        $this->myIp = DyndnsHelper::getMyIp();
+        $this->myIp = Helper::getMyIp();
         if (array_key_exists('myip', $_REQUEST)) {
-            if (DyndnsHelper::checkValidIp($_REQUEST['myip'])) {
+            if (Helper::checkValidIp($_REQUEST['myip'])) {
                 $this->myIp = $_REQUEST['myip'];
             } else {
                 $this->debug('Invalid parameter myip. Using default REMOTE_ADDR');
@@ -133,7 +131,7 @@ class Dyndns
     {
         foreach ($this->hostnames as $hostname) {
         	// check if the hostname is valid FQDN
-            if (! DyndnsHelper::checkValidHost($hostname)) {
+            if (! Helper::checkValidHost($hostname)) {
                 $this->returnCode('notfqdn');
             }
 
@@ -183,6 +181,6 @@ class Dyndns
 
     private function debug($message)
     {
-        $this->debugBuffer .= date('M j G:i:s') . ' Dyndns: ' . $message . "\n";
+        $this->debugBuffer .= @date('M j G:i:s') . ' Dyndns: ' . $message . "\n";
     }
 }

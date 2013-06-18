@@ -14,11 +14,15 @@
  */
 
 error_reporting(E_ALL);
-require_once(dirname(__FILE__) . '/classes/Dyndns.class.php');
 
-$GLOBALS['dyndns'] =& new Dyndns();
-$dyndns =& $GLOBALS['dyndns'];
+require_once __DIR__ . '/Dyndns/Helper.php';
+require_once __DIR__ . '/Dyndns/Hosts.php';
+require_once __DIR__ . '/Dyndns/Users.php';
+require_once __DIR__ . '/Dyndns/Server.php';
 
-@include(dirname(__FILE__). '/config.php');
+$GLOBALS['dyndns'] = new Dyndns\Server();
+$dyndns = $GLOBALS['dyndns'];
+
+require __DIR__ . '/config.php';
 
 $dyndns->init();

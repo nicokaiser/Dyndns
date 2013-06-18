@@ -1,8 +1,0 @@
-TODO
-====
-
-- Implement Wildcards
-- Implement NOCHG
-- Implement more features from DynDNS.org
-- Provide Apache templates (for mod_rewrite, etc.)
-

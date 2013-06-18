@@ -1,12 +1,14 @@
 <?php
 
+namespace Dyndns;
+
 /**
  * Host database.
  * 
  * @package Dyndns
  * @author  Nico Kaiser <nico@kaiser.me>
  */
-class DyndnsHosts
+class Hosts
 {    
     /**
      * Filename of the hosts file (dyndns.hosts)
@@ -74,7 +76,7 @@ class DyndnsHosts
             return false;
         }
 
-        if (! DyndnsHelper::checkValidHost($hostname)) {
+        if (! Helper::checkValidHost($hostname)) {
             $this->debug('Invalid host: ' . $hostname);
             return false;
         }
@@ -86,7 +88,7 @@ class DyndnsHosts
         if (is_array($this->hosts)) {
             foreach ($this->hosts as $line) {
                 if (preg_match("/^(.*?):(.*)/", $line, $matches)) {
-                    if (DyndnsHelper::compareHosts($matches[1], $hostname, '*') && 
+                    if (Helper::compareHosts($matches[1], $hostname, '*') && 
                             in_array($user, explode(',', strtolower($matches[2])))) {
                         return true;
                     }
@@ -145,11 +147,11 @@ class DyndnsHosts
         $key = $this->getConfig('bind.key');
 
         // sanitiy checks
-        if (! DyndnsHelper::checkValidHost($server)) {
+        if (! Helper::checkValidHost($server)) {
             $this->debug('ERROR: Invalid bind.server config value');
             return false;
         }
-        if (! DyndnsHelper::checkValidHost($zone)) {
+        if (! Helper::checkValidHost($zone)) {
             $this->debug('ERROR: Invalid bind.zone config value');
             return false;
         }
