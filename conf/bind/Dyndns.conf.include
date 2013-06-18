@@ -1,8 +1,6 @@
-
 key dyndns.example.com. {
 	algorithm HMAC-MD5;
-	secret "bvZfFHkl16wNGL/LuEUAqvlBeue9lw7C8GkHnQucN6jpKDMjOu29zFR6LlO5YlpN
-zYquDBmDSPVddX9SuFIK5A==";
+	secret "bvZfFHkl16wNGL/LuEUAqvlBeue9lw7C8GkHnQucN6jpKDMjOu29zFR6LlO5YlpNzYquDBmDSPVddX9SuFIK5A==";
 };
 
 zone "dyndns.org" {

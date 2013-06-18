@@ -15,10 +15,10 @@
 
 error_reporting(E_ALL);
 
-require_once __DIR__ . '/Dyndns/Helper.php';
-require_once __DIR__ . '/Dyndns/Hosts.php';
-require_once __DIR__ . '/Dyndns/Users.php';
-require_once __DIR__ . '/Dyndns/Server.php';
+require_once __DIR__ . '/lib/Dyndns/Helper.php';
+require_once __DIR__ . '/lib/Dyndns/Hosts.php';
+require_once __DIR__ . '/lib/Dyndns/Users.php';
+require_once __DIR__ . '/lib/Dyndns/Server.php';
 
 $GLOBALS['dyndns'] = new Dyndns\Server();
 $dyndns = $GLOBALS['dyndns'];
