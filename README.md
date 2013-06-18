@@ -1,20 +1,17 @@
-Introduction
-============
+Dyndns: a simple DynDNS server in PHP
+=====================================
 
-This script takes the same parameters as the original members.dyndns.org 
-server does. It can update a BIND DNS server via "nsupdate".
+This script takes the same parameters as the original dyndns.org server does. It can update a BIND DNS server via `nsupdate`.
 
-As it uses the same syntax as the original DynDNS.org servers do, a dynamic DNS server equipped with
-this script can be used with DynDNS compatible clients without having to modify anything on the
-client side.
+As it uses the same syntax as the original DynDNS.org servers do, a dynamic DNS server equipped with this script can be used with DynDNS compatible clients without having to modify anything on the client side.
 
 
 Installation
-============
+------------
 
 To mimic the original DynDNS.org behavior, the Script's URL must be
 
-	http://members.dyndns.org/nic/update
+    http://members.dyndns.org/nic/update
 
 You may have to adjust your own DNS configuration to make "members.dyndns.org" point to your own 
 Server and you Web Servers configuration to make "/nic/update" call the PHP script provided in this 
@@ -24,7 +21,7 @@ package.
 Furthermore, to be able to dynamically update the BIND DNS server, DNS key must be generated with
 the command:
 
-	dnskeygen -n dyndns.example.com -H 512 -h
+    dnskeygen -n dyndns.example.com -H 512 -h
 
 (Where "dyndns.example.com" is the key name)
 The resulting key (look at the "Key:" line in the resulting Kdyndns.example.com.+157+00000.private)
@@ -35,18 +32,18 @@ the BIND configuration (see below).
 The key has to be added to the BIND configuration (named.conf), as well as a DNS zone:
 
 
-key dyndns.example.com. {
-	algorithm HMAC-MD5;
-	secret "bvZ....K5A==";
-};
+    key dyndns.example.com. {
+        algorithm HMAC-MD5;
+        secret "bvZ....K5A==";
+    };
 
-zone "dyndns.example.com" {
-	type master;
-	file "dyndns.example.com.zone";
-	allow-update {
-		key dyndns.example.com.;
-	};
-};
+    zone "dyndns.example.com" {
+        type master;
+        file "dyndns.example.com.zone";
+        allow-update {
+            key dyndns.example.com.;
+        };
+    };
 
 In this case, the zone is also called "dyndns.example.com". The (initial) dyndns.example.com.zone 
 file (located in BIND's cache directory) looks like this:
@@ -71,12 +68,12 @@ The PHP script is called by the DynDNS client, it validates the input and calls 
 finally update the DNS with the new data. Its configuration is rather simple, the user database is
 implemented as text file "dyndns.user" with each line containing
 
-	<user>:<password>
+    <user>:<password>
 
 Where <password> is crypt'ed like in Apache's htpasswd files. 
 Hosts are assigned to users in using the file  "dyndns.hosts":
 
-	<host>:<user>(,<user>,<user>,...)
+    <host>:<user>(,<user>,<user>,...)
 
 (So users can update multiple hosts, and a host can be updated by multiple users).
 
@@ -87,7 +84,7 @@ them in your Document root, otherwise every Web user can read them.
 
 
 Implementation
-==============
+--------------
 
 Here you can find details on which capabilities of the DynDNS specification are implemented.
 
@@ -158,6 +155,10 @@ dnserr
 (See http://www.dyndns.com/developers/specs/return.html for more details)
 
 
+Todo
+----
 
-Nico Kaiser
-nico@siriux.net
+* Implement Wildcards
+* Implement NOCHG
+* Implement more features from DynDNS.org
+* Provide Apache templates (for mod_rewrite, etc.)
