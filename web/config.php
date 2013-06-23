@@ -9,12 +9,12 @@ if (!isset($dyndns) || !method_exists($dyndns, 'setConfig')) {
 /* 
  * Location of the hosts database
  */
-$dyndns->setConfig('hostsFile', 'conf/dyndns.hosts');
+$dyndns->setConfig('hostsFile', __DIR__ . '/../conf/dyndns.hosts');
 
 /* 
  * Location of the user database
  */
-$dyndns->setConfig('userFile', 'conf/dyndns.user');
+$dyndns->setConfig('userFile', __DIR__ . '/../conf/dyndns.user');
 
 /* 
  * Enable debugging?
@@ -30,7 +30,7 @@ $dyndns->setConfig('debugFile', '/tmp/dyndns.log');
  * Secret Key for BIND nsupdate
  * <keyname>:<secret>
  */
-$dyndns->setConfig('bind.key', 'dyndns.example.com:bvZfFHkl16wNGL/LuEUAqvlBeue9lw7C8GkHnQucN6jpKDMjOu29zFR6LlO5YlpNzYquDBmDSPVddX9SuFIK5A==');
+$dyndns->setConfig('bind.keyfile', __DIR__ . '/../conf/dyn.example.com.key');
 
 /*
  * Address of the BIND server. You can specify any remote DNS server here, 

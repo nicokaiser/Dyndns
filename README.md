@@ -13,43 +13,31 @@ This script acts like the original DynDNS.org server and handles DNS updates on 
 
     http://yourdomain.tld/?hostname=<domain>&myip=<ipaddr>
 
+To be able to dynamically update the BIND DNS server, a DNS key must be generated with the command:
 
-You may have to adjust your own DNS configuration to make "members.dyndns.org" point to your own 
-Server and you Web Servers configuration to make "/nic/update" call the PHP script provided in this 
-package.
+    ddns-confgen
 
+This command outputs instructions for your BIND installation. The generated key has to be added to the named.conf.local:
 
-Furthermore, to be able to dynamically update the BIND DNS server, DNS key must be generated with
-the command:
-
-    dnskeygen -n dyndns.example.com -H 512 -h
-
-(Where "dyndns.example.com" is the key name)
-The resulting key (look at the "Key:" line in the resulting Kdyndns.example.com.+157+00000.private)
-must be copied to both, the  config.php  file (along with the key name, see there for details), and 
-the BIND configuration (see below).
-
-
-The key has to be added to the BIND configuration (named.conf), as well as a DNS zone:
-
-
-    key dyndns.example.com. {
-        algorithm HMAC-MD5;
+    key "ddns-key" {
+        algorithm hmac-sha256;
         secret "bvZ....K5A==";
     };
 
+and saved to a file which is referenced in config.php as "bind.keyfile". In the "zone" entry, you have to add an "update-policy":
+
     zone "dyndns.example.com" {
         type master;
-        file "dyndns.example.com.zone";
-        allow-update {
-            key dyndns.example.com.;
-        };
-    };
+        file "db.dyndns.example.com";
+        ...
+        update-polify {
+            grand ddns-key zonesub ANY;
+        }
+    }
 
-In this case, the zone is also called "dyndns.example.com". The (initial) dyndns.example.com.zone 
-file (located in BIND's cache directory) looks like this:
+In this case, the zone is also called "dyndns.example.com". The (initial) db.dyndns.example.com file (located in BIND's cache directory) looks like this:
 
-$TTL 1h 
+$TTL 1h
 @ IN SOA dyndns.example.com. root.example.com. (
         2007111501      ; serial
         1h              ; refresh

@@ -140,7 +140,7 @@ class Hosts
         $server = $this->getConfig('bind.server');
         $zone = $this->getConfig('bind.zone');
         $ttl = $this->getConfig('bind.ttl') * 1;
-        $key = $this->getConfig('bind.key');
+        $keyfile = $this->getConfig('bind.keyfile');
 
         // sanitiy checks
         if (! Helper::checkValidHost($server)) {
@@ -159,8 +159,8 @@ class Hosts
             $this->debug('bind.ttl is too low. Setting to default 300.');
             $ttl = 300;
         }
-        if (! eregi('^[a-z0-9.-=/]+$', $key)) {
-            $this->debug('ERROR: Invalid bind.key config value');
+        if (! is_readable($keyfile)) {
+            $this->debug('ERROR: Invalid bind.keyfile config value');
             return false;
         }
 
@@ -182,7 +182,7 @@ class Hosts
         fclose($fh);
 
         // Execute nsupdate
-        $result = exec('/usr/bin/nsupdate -y ' . $key . ' ' . $tempfile . ' 2>&1');
+        $result = exec('/usr/bin/nsupdate -k ' . escapeshellarg($keyfile) . ' ' . $tempfile . ' 2>&1');
         unlink($tempfile);
         if ($result != '') {
             $this->debug('ERROR: nsupdate returns: ' . $result);
