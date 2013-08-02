@@ -18,7 +18,7 @@ class Helper
      */
     public static function checkValidIp($ip)
     {
-        if (! eregi("^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$", $ip))
+        if (! preg_match("/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$/", $ip))
             return false;
 
         $tmp = explode(".", $ip);
@@ -38,7 +38,7 @@ class Helper
      */
     public static function checkValidHost($hostname)
     {
-        return eregi('^[a-z0-9.-]+$', $hostname);
+        return preg_match('/^[a-z0-9.-]+$/', $hostname);
     }
 
     /**
