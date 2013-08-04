@@ -38,7 +38,7 @@ class Helper
      */
     public static function checkValidHost($hostname)
     {
-        return preg_match('/^[a-z0-9.-]+$/', $hostname);
+        return preg_match('/^[a-zA-Z0-9.-]+$/', $hostname);
     }
 
     /**
