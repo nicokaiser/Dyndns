@@ -33,7 +33,7 @@ and saved to a file which is referenced in config.php as "bind.keyfile". In the 
         type master;
         file "db.dyndns.example.com";
         ...
-        update-polify {
+        update-policy {
             grand ddns-key zonesub ANY;
         }
     }
