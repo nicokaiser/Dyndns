@@ -40,15 +40,15 @@ and saved to a file which is referenced in config.php as "bind.keyfile". In the 
 
 In this case, the zone is also called "dyndns.example.com". The (initial) db.dyndns.example.com file (located in BIND's cache directory) looks like this:
 
-  $TTL 1h
-  @ IN SOA dyndns.example.com. root.example.com. (
-          2007111501      ; serial
-          1h              ; refresh
-          15m             ; retry
-          7d              ; expiration
-          1h              ; minimum
-          )  
-          NS <your dns server>
+    $TTL 1h
+    @ IN SOA dyndns.example.com. root.example.com. (
+            2007111501      ; serial
+            1h              ; refresh
+            15m             ; retry
+            7d              ; expiration
+            1h              ; minimum
+            )  
+            NS <your dns server>
 
 Remember to change access rights so BIND is able to write to this file.
 
@@ -77,15 +77,15 @@ them in your Document root, otherwise every Web user can read them.
 
 Authentication in URL:
 
-  http://username:password@yourdomain.tld/?hostname=yourhostname&myip=ipaddress
+    http://username:password@yourdomain.tld/?hostname=yourhostname&myip=ipaddress
 
 
 Raw HTTP GET Request:
 
-  GET /?hostname=yourhostname&myip=ipaddress HTTP/1.0 
-  Host: yourdomain.tld 
-  Authorization: Basic base-64-authorization 
-  User-Agent: Company - Device - Version Number
+    GET /?hostname=yourhostname&myip=ipaddress HTTP/1.0 
+    Host: yourdomain.tld 
+    Authorization: Basic base-64-authorization 
+    User-Agent: Company - Device - Version Number
 
 Fragment base-64-authorization should be represented by Base 64 encoded username:password string.
 
