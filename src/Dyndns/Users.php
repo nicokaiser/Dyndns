@@ -4,9 +4,6 @@ namespace Dyndns;
 
 /**
  * User database.
- * 
- * @package Dyndns
- * @author  Nico Kaiser <nico@kaiser.me>
  */
 class Users
 {

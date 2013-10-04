@@ -4,9 +4,6 @@ namespace Dyndns;
 
 /**
  * Simple Dynamic DNS server.
- *
- * @package Dyndns
- * @author  Nico Kaiser <nico@kaiser.me>
  */
 class Server
 {
@@ -86,11 +83,14 @@ class Server
 
         // Return "good" code as everything seems to be ok now
         $this->returnCode('good');
+
+        return $this;
     }
 
     public function setConfig($key, $value)
     {
         $this->config[$key] = $value;
+        return $this;
     }
 
     public function getConfig($key)

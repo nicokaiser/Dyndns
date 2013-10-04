@@ -4,9 +4,6 @@ namespace Dyndns;
 
 /**
  * Host database.
- *
- * @package Dyndns
- * @author  Nico Kaiser <nico@kaiser.me>
  */
 class Hosts
 {

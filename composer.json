@@ -1,0 +1,18 @@
+{
+    "name": "nicokaiser/dyndns",
+    "description": "A simple dynamic DNS that updates an existing BIND",
+    "keywords": ["dns", "dyndns"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nico Kaiser",
+            "email": "nico@kaiser.me",
+            "homepage": "http://kaiser.me"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Dyndns": "src/",
+        }
+    }
+}

@@ -4,9 +4,6 @@ namespace Dyndns;
 
 /**
  * Helper functions.
- *
- * @package Dyndns
- * @author  Nico Kaiser <nico@kaiser.me>
  */
 class Helper
 {

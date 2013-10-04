@@ -69,8 +69,37 @@ Hosts are assigned to users in using the file  "dyndns.hosts":
 (So users can update multiple hosts, and a host can be updated by multiple users).
 
 
-The location of these files must be specified in  "config.php". For security reasons, don't place
-them in your Document root, otherwise every Web user can read them.
+### Installation via Composer
+
+    # Install Composer
+    curl -sS https://getcomposer.org/installer | php
+
+    # Add Dyndns as a dependency
+    php composer.phar require nicokaiser/dyndns:*
+
+Then you can create a simple `index.php` with the configuration:
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+$dyndns = new Dyndns\Server();
+
+// Configuration
+$dyndns
+  ->setConfig('hostsFile', __DIR__ . '/../conf/dyndns.hosts') // hosts database
+  ->setConfig('userFile', __DIR__ . '/../conf/dyndns.user')   // user database
+  ->setConfig('debug', true)  // enable debugging
+  ->setConfig('debugFile', '/tmp/dyndns.log') // debug file
+  ->setConfig('bind.keyfile', __DIR__ . '/../conf/dyn.example.com.key') // secret key for BIND nsupdate ("<keyname>:<secret>")
+  ->setConfig('bind.server', 'localhost') // address of the BIND server
+  ->setConfig('bind.zone', 'dyndns.example.com') // BIND zone for the updates
+  ->setConfig('bind.ttl', '300') // TTL for DNS entries
+;
+
+$dyndns->init();
+```
 
 
 ### Usage
