@@ -27,14 +27,14 @@ This command outputs instructions for your BIND installation. The generated key 
         secret "bvZ....K5A==";
     };
 
-and saved to a file which is referenced in config.php as "bind.keyfile". In the "zone" entry, you have to add an "update-policy":
+and saved to a file which is referenced in index.php as "bind.keyfile". In the "zone" entry, you have to add an "update-policy":
 
     zone "dyndns.example.com" {
         type master;
         file "db.dyndns.example.com";
         ...
         update-policy {
-            grand ddns-key zonesub ANY;
+            grant ddns-key zonesub ANY;
         }
     }
 
