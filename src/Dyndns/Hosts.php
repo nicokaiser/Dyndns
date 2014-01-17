@@ -170,7 +170,6 @@ class Hosts
         }
         fwrite($fh, "server $server\n");
         fwrite($fh, "zone $zone\n");
-        $ttl = $this->getConfig('bind.ttl');
         foreach ($this->updates as $host => $ip) {
             fwrite($fh, "update delete $host A\n");
             fwrite($fh, "update add $host $ttl A $ip\n");
