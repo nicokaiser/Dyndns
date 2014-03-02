@@ -50,7 +50,7 @@ In this case, the zone is also called "dyndns.example.com". The (initial) db.dyn
             )  
             NS <your dns server>
 
-Remember to change access rights so BIND is able to write to this file.
+Remember to change access rights so BIND is able to write to this file. On Ubuntu the zone need to be in /var/lib/bind due to AppArmor.
 
 
 ### PHP script configuration
@@ -61,7 +61,10 @@ implemented as text file "dyndns.user" with each line containing
 
     <user>:<password>
 
-Where the password is crypt'ed like in Apache's htpasswd files. 
+Where the password is crypt'ed like in Apache's htpasswd files. Use -d parameter to select the CRYPT encryption.
+
+    htpasswd -c -d conf/dyndns.user user1
+
 Hosts are assigned to users in using the file  "dyndns.hosts":
 
     <host>:<user>(,<user>,<user>,...)
