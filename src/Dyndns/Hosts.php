@@ -162,7 +162,7 @@ class Hosts
         }
 
         // create temp file with nsupdate commands
-        $tempfile = tempnam('/tmp', 'Dyndns');
+        $tempfile = tempnam(sys_get_temp_dir(), 'Dyndns');
         $fh = @fopen($tempfile, 'w');
         if (! $fh) {
             $this->debug('ERROR: Could not open temporary file');
