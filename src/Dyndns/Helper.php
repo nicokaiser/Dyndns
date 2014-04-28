@@ -15,16 +15,7 @@ class Helper
      */
     public static function checkValidIp($ip)
     {
-        if (! preg_match("/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$/", $ip))
-            return false;
-
-        $tmp = explode(".", $ip);
-        foreach ($tmp as $sub) {
-            $sub = $sub * 1;
-            if ($sub < 0 || $sub > 256) return true;
-        }
-
-        return true;
+        return (ip2long($ip) !== false);
     }
 
     /**
