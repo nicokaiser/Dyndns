@@ -15,9 +15,108 @@ class Helper
      */
     public static function checkValidIp($ip)
     {
-        return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) || filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+        return Helper::isIPv4Addr($ip) || Helper::isIPv6Addr($ip);
     }
 
+    /**
+     * Is IP address a valid IPv4 address?
+     *
+     * @param string IP address
+     * @return boolean True if IP is a valid IPv4 address
+     */
+    public static function isIPv4Addr($ip) 
+    {
+	return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
+    }
+
+    /**
+     * Is IP address a valid IPv6 address?
+     *
+     * @param string IP address
+     * @return boolean True if IP is a valid IPv6 address
+     */
+    public static function isIPv6Addr($ip) 
+    {
+	return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+    }
+
+    
+    /**
+     * Returns DNS record type depending on the IP version
+     *
+     * @param string IP address
+     * @return String record type or FALSE
+     */    
+    public static function getRecordType($ip)
+    {
+	if (Helper::isIPv4Addr($ip)) {
+	    return "A";
+	}
+	
+	if (Helper::isIPv6Addr($ip)) {
+	    return "AAAA";
+	}
+	
+	return FALSE;
+    }
+
+    
+    /**
+     * Returns DNS record id depending on the IP version
+     *
+     * @param string IP address
+     * @return int record id or FALSE
+     */    
+    public static function getRecordId($ip)
+    {
+	if (Helper::isIPv4Addr($ip)) {
+	    return DNS_A;
+	}
+	
+	if (Helper::isIPv6Addr($ip)) {
+	    return DNS_AAAA;
+	}
+	
+	return FALSE;
+    }    
+    
+    /**
+     * Checks if IP has changed
+     *
+     * @param string hostname
+     * @param string IP address
+     * @param string authoritative name servers
+     * @return boolean True if IP has changed
+     */    
+    public static function hasIPChanged($hostname, $newIp, $ns = NULL)
+    {    
+	$record_id = Helper::getRecordId($newIp);
+	$dnsRes = dns_get_record($hostname, $record_id, $ns);
+
+	foreach ($dnsRes as $k => $v) {
+	    $currIp = "invalid";
+	
+	    // IPv4:
+	    if (array_key_exists("ip", $v)) {
+		$currIp = $v["ip"];
+	    }
+	    
+	    // IPv6
+	    if (array_key_exists("ipv6", $v)) {
+		$currIp = $v["ipv6"];
+	    }
+	    
+	    $currIpPton = inet_pton($currIp);
+	    $newIpPton = inet_pton($newIp);	    
+	    
+	    if (strcmp($currIpPton, $newIpPton) === 0) {
+		return false;
+	    }
+	}
+	
+	return true;
+    }
+    
     /**
      * Check valid hostname (FQDN)
      *

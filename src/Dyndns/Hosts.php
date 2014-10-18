@@ -171,15 +171,16 @@ class Hosts
         fwrite($fh, "server $server\n");
         fwrite($fh, "zone $zone\n");
         foreach ($this->updates as $host => $ip) {
-           $recType = "unknown record type";
+           $recType = Helper::getRecordType($ip);
            
-           if( filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ){
-               $recType = "A";
+           if ($recType === FALSE) {
+	      $this->debug('ERROR: unknown record type');
            }
            
-           if( filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) ){
-               $recType = "AAAA";
+           if (! Helper::hasIPChanged($host, $ip)) {
+	      continue;
            }
+           
            fwrite($fh, "update delete $host $recType\n");
            fwrite($fh, "update add $host $ttl $recType $ip\n");
         }
