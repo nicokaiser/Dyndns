@@ -15,7 +15,7 @@ class Helper
      */
     public static function checkValidIp($ip)
     {
-        return (ip2long($ip) !== false);
+        return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) || filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
     }
 
     /**

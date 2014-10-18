@@ -171,8 +171,17 @@ class Hosts
         fwrite($fh, "server $server\n");
         fwrite($fh, "zone $zone\n");
         foreach ($this->updates as $host => $ip) {
-            fwrite($fh, "update delete $host A\n");
-            fwrite($fh, "update add $host $ttl A $ip\n");
+           $recType = "unknown record type";
+           
+           if( filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ){
+               $recType = "A";
+           }
+           
+           if( filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) ){
+               $recType = "AAAA";
+           }
+           fwrite($fh, "update delete $host $recType\n");
+           fwrite($fh, "update add $host $ttl $recType $ip\n");
         }
         fwrite($fh, "send\n");
         fclose($fh);
