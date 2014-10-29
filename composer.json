@@ -1,7 +1,7 @@
 {
     "name": "nicokaiser/dyndns",
     "description": "A simple dynamic DNS that updates an existing BIND",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "keywords": ["dns", "dyndns"],
     "license": "MIT",
     "authors": [

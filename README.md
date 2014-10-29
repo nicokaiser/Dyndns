@@ -139,6 +139,11 @@ Fragment base-64-authorization should be represented by Base 64 encoded username
 - `911` There is a problem or scheduled maintenance on our side.
 
 
+### Contributors
+
+- @afrimberger (IPv6 support)
+
+
 ### License
 
 MIT
