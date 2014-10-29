@@ -171,8 +171,18 @@ class Hosts
         fwrite($fh, "server $server\n");
         fwrite($fh, "zone $zone\n");
         foreach ($this->updates as $host => $ip) {
-            fwrite($fh, "update delete $host A\n");
-            fwrite($fh, "update add $host $ttl A $ip\n");
+           $recType = Helper::getRecordType($ip);
+           
+           if ($recType === FALSE) {
+	      $this->debug('ERROR: unknown record type');
+           }
+           
+           if (! Helper::hasIPChanged($host, $ip)) {
+	      continue;
+           }
+           
+           fwrite($fh, "update delete $host $recType\n");
+           fwrite($fh, "update add $host $ttl $recType $ip\n");
         }
         fwrite($fh, "send\n");
         fclose($fh);
